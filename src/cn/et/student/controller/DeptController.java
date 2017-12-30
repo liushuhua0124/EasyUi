@@ -34,4 +34,10 @@ public class DeptController {
 		List<Dept> queryDept = deptService.queryDept();
 		return queryDept;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/query")
+	public String queryAll(){
+		return null;
+	}
 }
