@@ -1,0 +1,41 @@
+package cn.et.student.servlet.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.et.student.dao.StudentMapper;
+import cn.et.student.entity.Student;
+import cn.et.student.entity.StudentExample;
+import cn.et.student.entity.StudentExample.Criteria;
+import cn.et.student.servlet.StudentService;
+import cn.et.student.utils.PageTools;
+
+@Service
+public class StudentServiceImpl implements StudentService{
+	
+	@Autowired
+	StudentMapper studentMapper;
+	
+	public PageTools queryStudent(String stuname,Integer page,Integer rows) {
+		if(stuname == null){
+			stuname = "";
+		}
+		Integer queryStudentCount = queryStudentCount(stuname);
+		PageTools PageTools = new PageTools(page, queryStudentCount, rows);
+		
+		List<Student> queryStudent = studentMapper.queryStudent(stuname, PageTools.getStartIndex()-1, rows);
+		PageTools.setRows(queryStudent);
+		return PageTools;
+	}
+
+	//查询总条数
+	public Integer queryStudentCount(String stuname) {
+		Integer queryStudentCount = studentMapper.queryStudentCount(stuname);
+		return queryStudentCount;
+	}
+	
+	
+	
+}

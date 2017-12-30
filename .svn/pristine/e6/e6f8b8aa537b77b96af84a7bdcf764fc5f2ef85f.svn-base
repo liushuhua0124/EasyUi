@@ -1,0 +1,9 @@
+package cn.et.student.servlet;
+
+import java.util.List;
+
+import cn.et.student.entity.Student;
+
+public interface StudentService {
+	public List<Student> queryStudent(String stuname,Integer page,Integer rows);
+}

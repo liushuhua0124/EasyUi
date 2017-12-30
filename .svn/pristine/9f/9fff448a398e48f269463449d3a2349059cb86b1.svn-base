@@ -1,0 +1,31 @@
+package cn.et.student.servlet.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.et.student.dao.StudentMapper;
+import cn.et.student.entity.Student;
+import cn.et.student.entity.StudentExample;
+import cn.et.student.entity.StudentExample.Criteria;
+import cn.et.student.servlet.StudentService;
+
+@Service
+public class StudentServiceImpl implements StudentService{
+	
+	@Autowired
+	StudentMapper studentMapper;
+	
+	public List<Student> queryStudent(String stuname,Integer page,Integer rows) {
+		StudentExample StudentExample = new StudentExample();
+		Criteria createCriteria = StudentExample.createCriteria();
+		if(stuname == null) {
+			stuname = "";
+		}
+		createCriteria.andStunameLike("%"+stuname+"%");
+		List<Student> selectByExample = studentMapper.selectByExample(StudentExample);
+		return selectByExample;
+	}
+	
+}
